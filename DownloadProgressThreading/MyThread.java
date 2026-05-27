@@ -1,4 +1,4 @@
-package ProgressBar;
+package DownloadProgressThreading;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
