@@ -8,25 +8,26 @@ import java.util.Random;
 public class GamePanel extends JPanel implements ActionListener {
     Timer timer;
     Random rand = new Random();
-    public final int GAME_UNITS = 20;
-    int[] x = new int[GAME_UNITS];
-    int[] y = new int[GAME_UNITS];
     int snakeLength = 1;
-    int foodx = rand.nextInt(0, 24) * 25;
-    int foody = rand.nextInt(0, 24) * 25;
     char direction = 'R';
+    public final int UNIT_SIZE = 25;
     public final int SCREEN_WIDTH = 600;
     public final int SCREEN_HEIGHT = 600;
+    public final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
+    int foodx = rand.nextInt(0, SCREEN_WIDTH / UNIT_SIZE) * 25;
+    int foody = rand.nextInt(0, SCREEN_WIDTH / UNIT_SIZE) * 25;
+    int[] x = new int[GAME_UNITS];
+    int[] y = new int[GAME_UNITS];
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.WHITE);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
-        timer = new Timer(100, this);
-        timer.start();
         x[0] = 100;
         y[0] = 100;
+        timer = new Timer(100, this);
+        timer.start();
     }
 
     @Override
@@ -45,39 +46,46 @@ public class GamePanel extends JPanel implements ActionListener {
         for (int i = 0; i < snakeLength; i++) {
             g.setColor(Color.GREEN);
             // x, y, width, height
-            g.fillRect(x[i], y[i], 25, 25);
+            g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
         }
         g.setColor(Color.RED);
-        g.fillRect(foodx, foody, 25, 25);
+        g.fillRect(foodx, foody, UNIT_SIZE, UNIT_SIZE);
+        g.drawString("Score: " + (snakeLength - 1), 250, 250);
     }
 
     public void move() {
-        if (x[0] == foodx && y[0] == foody) {
-            snakeLength++;
-            foodx = rand.nextInt(0, 24) * 25;
-            foody = rand.nextInt(0, 24) * 25;
+        System.out.println(snakeLength);
+        for (int i = snakeLength - 1; i > 0; i--) {
+            x[i] = x[i - 1];
+            y[i] = y[i - 1];
         }
         switch (direction) {
             case 'U':
-                if (y[0] == 0)
-                    y[0] = 600;
-                y[0] -= 25;
+                y[0] -= UNIT_SIZE;
+                if (y[0] < 0)
+                    y[0] = SCREEN_HEIGHT - UNIT_SIZE;
                 break;
             case 'D':
-                if (y[0] == 600)
+                y[0] += UNIT_SIZE;
+                if (y[0] >= SCREEN_HEIGHT)
                     y[0] = 0;
-                y[0] += 25;
                 break;
             case 'L':
-                if (x[0] == 0)
-                    x[0] = 600;
-                x[0] -= 25;
+                x[0] -= UNIT_SIZE;
+                if (x[0] < 0)
+                    x[0] = SCREEN_WIDTH - UNIT_SIZE;
                 break;
             case 'R':
-                if (x[0] == 600)
+                x[0] += UNIT_SIZE;
+                if (x[0] >= SCREEN_WIDTH)
                     x[0] = 0;
-                x[0] += 25;
                 break;
+        }
+        if (x[0] == foodx && y[0] == foody) {
+            if (snakeLength < GAME_UNITS)
+                snakeLength++;
+            foodx = rand.nextInt(0, SCREEN_WIDTH / UNIT_SIZE) * 25;
+            foody = rand.nextInt(0, SCREEN_WIDTH / UNIT_SIZE) * 25;
         }
     }
 
