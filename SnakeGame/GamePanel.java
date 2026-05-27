@@ -44,7 +44,11 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
         for (int i = 0; i < snakeLength; i++) {
-            g.setColor(Color.GREEN);
+            if (i == 0) {
+                g.setColor(Color.BLACK);
+            } else {
+                g.setColor(Color.GREEN);
+            }
             // x, y, width, height
             g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
         }
