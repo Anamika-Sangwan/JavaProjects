@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.addKeyListener(new MyKeyAdapter());
         x[0] = 100;
         y[0] = 100;
-        timer = new Timer(100, this);
+        timer = new Timer(75, this);
         timer.start();
     }
 
