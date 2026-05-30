@@ -1,7 +1,7 @@
-# JavaProjects
+#Java Projects
 1. Finding Pi
-   This project inputs a number from the user and outputs Pi upto those decimal places.
-2. Download Porgress
-   This project implements multithreading and creates multiple threads when the download button is clicked.
+   Calculates and displays the value of π (Pi) to a user-specified number of decimal places. The program accepts input from the user and generates the corresponding precision.
+2. Download Progress Simulator
+   A multithreaded application that simulates file downloads by creating and managing multiple threads when the download button is clicked. This project demonstrates Java concurrency and thread management concepts.
 3. Snake Game
-   Classic snake game with food, snake and scores. The only features that hasnt been added yet is self-collision detection. Implmenets the Java swign library and the AWT librasry and introduces Java graphics with array logic for food-collision detection and movement.
+   A classic Snake game built using Java Swing and AWT. Features include snake movement, food generation, score tracking, and food-collision detection using array-based logic. The project introduces Java graphics programming and game development fundamentals. Self-collision detection is currently the only feature not yet implemented.
