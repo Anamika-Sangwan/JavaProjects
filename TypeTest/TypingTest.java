@@ -28,13 +28,25 @@ public class TypingTest{
 
     public static void main(String[] args){
         Scanner s = new Scanner(System.in);
-        String expected = generateSentence(10);
+        String expected = generateSentence(30);
         System.out.println("Type the string provided:- " + expected);
         long startTime = System.nanoTime();
         String input = s.nextLine();
         long endTime = System.nanoTime();
         double timeTaken = (endTime-startTime)/1_000_000_000.0;
-        System.out.println("Time taken to type the string is " + timeTaken + " seconds and your typing speed is " + 10/timeTaken + " words per second!");
-        System.out.println(expected.equals(input));
+        String[] expectedWords = expected.split("\\s+");
+        String[] inputWords = input.split("\\s+");
+        int correct = 0;
+        for (int i = 0; i < Math.min(expectedWords.length, inputWords.length); i++) {
+            if (expectedWords[i].equals(inputWords[i])) {
+                correct++;
+            }
+        }
+        double accuracy = (correct * 100.0) / expectedWords.length;
+        System.out.printf("Accuracy: %.2f%%%n", accuracy);
+        System.out.printf("Time Taken: %.2f seconds%n", timeTaken);
+        int wordCount = expected.split("\\s+").length;
+        double wpm = (wordCount / timeTaken) * 60;
+        System.out.printf("Typing Speed: %.2f WPM%n", wpm);
     }
 }
